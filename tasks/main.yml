@@ -1,0 +1,61 @@
+---
+
+- name: install MariaDB client + server
+  apt:
+    pkg: "{{ mariadb_packages }}"
+    state: present
+  register: __mariadb_install_status
+
+- name: start MariaDB
+  service:
+    name: mysql
+    state: started
+
+- name: create MariaDB admin user
+  mysql_user:
+    name: "{{ mariadb_admin_user }}"
+    host: "{{ item }}"
+    password: "{{ mariadb_admin_password }}"
+    priv: "*.*:All,GRANT"
+    #login_user: root
+    #login_unix_socket: /run/mysqld/mysqld.sock
+  with_items:
+    - "localhost"
+
+- name: create MariaDB /root/.my.cnf
+  template:
+    src: root/my.cnf.j2
+    dest: /root/.my.cnf
+    owner: root
+    group: root
+    mode: 0600
+
+- name: remove MariaDB test database on first install
+  mysql_db:
+    name: test
+    state: absent
+  when: __mariadb_install_status|d() and __mariadb_install_status.changed
+
+- name: configure MariaDB server
+  template:
+    src: etc/mysql/mariadb.conf.d/60-server.cnf.j2
+    dest: "{{ '/etc/mysql/conf.d/60-server.cnf' if ansible_distribution_major_version|int <= 8 else '/etc/mysql/mariadb.conf.d/60-server.cnf' }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart mysql
+  tags:
+    - role:mariadb:config
+
+- name: ensure databases are present
+  mysql_db:
+    name: "{{ item }}"
+  with_items: "{{ mariadb_databases }}"
+
+- name: Run handlers if needed
+  meta: flush_handlers
+
+- import_tasks: users.yml
+
+- include_tasks: replication.yml
+  when: mariadb_replication_master or mariadb_replication_slave
