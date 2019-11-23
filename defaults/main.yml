@@ -104,7 +104,6 @@ mariadb_packages:
  - python-mysqldb
  - mariadb-client
  - mariadb-server
- - "{{ 'automysqlbackup' if mariadb_automysqlbackup|bool else [] }}"
 
 # Munin monitoring
 mariadb_munin: False

@@ -6,6 +6,12 @@
     state: present
   register: __mariadb_install_status
 
+- name: optionally install automysqlbackup
+  apt:
+    pkg: "automysqlbackup"
+    state: present
+  when: mariadb_automysqlbackup
+
 - name: start MariaDB
   service:
     name: mysql
