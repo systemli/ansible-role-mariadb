@@ -112,6 +112,11 @@ mariadb_mysqld_options_combined:
       - '{{ mariadb_mysqld_bin_log_options if mariadb_replication_master else [] }}'
       - '{{ mariadb_mysqld_repl_options if (mariadb_replication_master or mariadb_replication_slave) else [] }}'
       - '{{ mariadb_mysqld_options }}'
+
+# Munin monitoring
+mariadb_munin: False
+#mariadb_munin_commands_select_warning: 300
+#mariadb_munin_commands_select_critical: 600
 ```
 
 # License

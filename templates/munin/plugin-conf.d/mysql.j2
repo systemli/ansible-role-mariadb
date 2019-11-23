@@ -1,0 +1,14 @@
+[mysql_*]
+env.mysqlconnection DBI:mysql:mysql
+env.mysqluser root
+env.cachenamespace munin_mysql_pri
+
+{% if mariadb_munin_commands_select_warning is defined or mariadb_munin_commands_select_critical is defined %}
+[mysql_commands]
+{% endif %}
+{% if mariadb_munin_commands_select_warning is defined %}
+env.Com_select_warning {{ mariadb_munin_commands_select_warning }}
+{% endif %}
+{% if mariadb_munin_commands_select_critical is defined %}
+env.Com_select_critical {{ mariadb_munin_commands_select_critical }}
+{% endif %}

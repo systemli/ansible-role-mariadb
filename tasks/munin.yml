@@ -1,0 +1,32 @@
+- name: ensure munin-plugins-core is installed (on stretch from stretch-backports)
+  apt:
+    name: munin-plugins-core
+    state: present
+    default_release: "{{ 'stretch-backports' if ansible_distribution_release == 'stretch' else omit }}"
+
+- name: ensure munin perl packages are installed
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  loop:
+    - libcache-perl
+    - libcache-cache-perl
+
+- name: ensure common plugins are present
+  file:
+    src: "/usr/share/munin/plugins/mysql_"
+    dest: "/etc/munin/plugins/mysql_{{ item }}"
+    state: link
+  loop:
+    - commands 
+    - qcache
+    - network_traffic
+  notify: restart munin-node
+
+- name: ensure mysql plugin config is present
+  template:
+    src: munin/plugin-conf.d/mysql.j2
+    dest: /etc/munin/plugin-conf.d/mysql
+    owner: root
+    group: root
+    mode: 0644

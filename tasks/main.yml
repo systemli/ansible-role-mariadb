@@ -59,3 +59,8 @@
 
 - include_tasks: replication.yml
   when: mariadb_replication_master or mariadb_replication_slave
+
+- include_tasks: munin.yml
+  when: mariadb_munin
+  tags:
+    - munin
