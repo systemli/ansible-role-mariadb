@@ -5,7 +5,7 @@
 
 - name: create replication user
   mysql_user:
-    name: "{{ mariadb_replication_user_local.name }}"
+    name: "{{ mariadb_replication_user_local.user }}"
     host: "{{ mariadb_replication_user_local.host|d('%') }}"
     password: "{{ mariadb_replication_user_local.pass }}"
     priv: "*.*:REPLICATION SLAVE"
@@ -32,6 +32,6 @@
     master_host: "{{ mariadb_replication_master_server }}"
     master_log_file: "{{ __mariadb_repl_master_status.File }}"
     master_log_pos: "{{ __mariadb_repl_master_status.Position }}"
-    master_user: "{{ mariadb_replication_user_remote.name }}"
+    master_user: "{{ mariadb_replication_user_remote.user }}"
     master_password: "{{ mariadb_replication_user_remote.pass }}"
   when: mariadb_replication_slave and not __mariadb_repl_slave_status.Is_Slave
