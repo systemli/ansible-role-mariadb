@@ -16,6 +16,7 @@
   mysql_replication:
     mode: getslave
   ignore_errors: True
+  check_mode: no
   register: __mariadb_repl_slave_status
   when: mariadb_replication_slave
 
