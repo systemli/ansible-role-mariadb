@@ -23,8 +23,8 @@
     host: "{{ item }}"
     password: "{{ mariadb_admin_password }}"
     priv: "*.*:All,GRANT"
-    #login_user: root
-    #login_unix_socket: /run/mysqld/mysqld.sock
+    login_user: root
+    login_unix_socket: /run/mysqld/mysqld.sock
   with_items:
     - "localhost"
 

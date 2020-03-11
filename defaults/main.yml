@@ -101,9 +101,10 @@ mariadb_mysqld_options_combined:
       - '{{ mariadb_mysqld_options }}'
 
 mariadb_packages:
- - python-mysqldb
  - mariadb-client
  - mariadb-server
+ - python-pymysql
+ - python3-pymysql
 
 # Munin monitoring
 mariadb_munin: False
