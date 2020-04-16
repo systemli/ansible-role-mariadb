@@ -4,3 +4,6 @@
   roles:
     - role: ansible-role-mariadb
   become: true
+  vars:
+    mariadb_databases:
+      - molecule_test
