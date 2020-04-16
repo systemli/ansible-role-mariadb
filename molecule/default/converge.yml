@@ -4,3 +4,11 @@
   roles:
     - role: ansible-role-mariadb
   become: true
+  vars:
+    mariadb_databases:
+      - test_db
+    mariadb_users:
+      - name: test_user
+        host: localhost
+        password: insecure
+        priv: "test_db.*:ALL"

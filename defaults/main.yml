@@ -1,19 +1,14 @@
 ---
-
-# Admin user and password settings
-mariadb_admin_user: admin
-mariadb_admin_password:
-
 # MariaDB databases
 mariadb_databases: []
 
 # Additional MariaDB users
-# mariadb_users_extra:
+# mariadb_users:
 #   - name: project
 #     host: localhost
 #     password: insecure
 #     priv: "project.*:All"
-mariadb_users_extra: []
+mariadb_users: []
 
 # Install automysqlbackup
 mariadb_automysqlbackup: yes
@@ -109,3 +104,6 @@ mariadb_packages:
 mariadb_munin: False
 # mariadb_munin_commands_select_warning: 300
 # mariadb_munin_commands_select_critical: 600
+
+# backward compatibility
+mariadb_users_extra: "{{ mariadb_users }}"

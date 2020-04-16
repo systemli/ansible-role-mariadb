@@ -13,20 +13,16 @@ The role is tested on Debian Jessie, Stretch, and Buster.
 ## Variables and their defaults
 
 ```
-# Admin user and password settings
-mariadb_admin_user: admin
-mariadb_admin_password:
-
 # MariaDB databases
 mariadb_databases: []
 
 # Additional MariaDB users
-#mariadb_users_extra:
+#mariadb_users:
 #  - name: project
 #    host: localhost
 #    password: insecure
 #    priv: "project.*:All"
-mariadb_users_extra: []
+mariadb_users: []
 
 # Install automysqlbackup
 mariadb_automysqlbackup: yes
