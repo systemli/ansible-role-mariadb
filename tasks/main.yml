@@ -22,25 +22,6 @@
     name: mysql
     state: started
 
-- name: create MariaDB admin user
-  mysql_user:
-    name: "{{ mariadb_admin_user }}"
-    host: "{{ item }}"
-    password: "{{ mariadb_admin_password }}"
-    priv: "*.*:All,GRANT"
-    login_user: root
-    login_unix_socket: /run/mysqld/mysqld.sock
-  with_items:
-    - "localhost"
-
-- name: create MariaDB /root/.my.cnf
-  template:
-    src: root/my.cnf.j2
-    dest: /root/.my.cnf
-    owner: root
-    group: root
-    mode: 0600
-
 - name: configure MariaDB server
   template:
     src: etc/mysql/mariadb.conf.d/60-server.cnf.j2
@@ -55,6 +36,8 @@
 - name: ensure databases are present
   mysql_db:
     name: "{{ item }}"
+    login_unix_socket: /run/mysqld/mysqld.sock
+    login_password: 'placeholder'
   with_items: "{{ mariadb_databases }}"
 
 - name: Run handlers if needed

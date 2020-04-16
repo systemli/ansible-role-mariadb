@@ -1,20 +1,5 @@
 ---
 
-- name: create local MariaDB admin user
-  mysql_user:
-    name: "{{ mariadb_admin_user }}"
-    host: "localhost"
-    password: "{{ mariadb_admin_password }}"
-    priv: "*.*:All,GRANT"
-
-- name: create MariaDB /root/.my.cnf
-  template:
-    src: root/my.cnf.j2
-    dest: /root/.my.cnf
-    owner: root
-    group: root
-    mode: 0600
-
 - name: create additional MariaDB users
   mysql_user:
     name: "{{ item.name }}"
