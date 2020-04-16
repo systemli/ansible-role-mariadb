@@ -6,6 +6,11 @@
     state: present
   notify: remove MariaDB test database
 
+- name: install python-pymysql
+  apt:
+    pkg: python-pymysql
+  when: ansible_distribution_major_version|int <= 9
+
 - name: optionally install automysqlbackup
   apt:
     pkg: "automysqlbackup"

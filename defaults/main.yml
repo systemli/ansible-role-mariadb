@@ -103,7 +103,6 @@ mariadb_mysqld_options_combined:
 mariadb_packages:
   - mariadb-client
   - mariadb-server
-  - python-pymysql
   - python3-pymysql
 
 # Munin monitoring
