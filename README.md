@@ -13,10 +13,6 @@ The role is tested on Debian Jessie, Stretch, and Buster.
 ## Variables and their defaults
 
 ```
-# Admin user and password settings
-mariadb_admin_user: admin
-mariadb_admin_password:
-
 # MariaDB databases
 mariadb_databases: []
 
