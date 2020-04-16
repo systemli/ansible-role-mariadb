@@ -1,13 +1,20 @@
 ---
-dependency:
-  name: galaxy
 driver:
-  name: docker
+  name: vagrant
+  provider:
+    name: virtualbox
+
 platforms:
-  - name: instance
-    image: "geerlingguy/docker-${MOLECULE_DISTRO:-debian10}-ansible:latest"
-    command: ${MOLECULE_DOCKER_COMMAND:-""}
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    privileged: true
-    pre_build_image: true
+  - name: buster64
+    box: debian/buster64
+  - name: stretch64
+    box: debian/stretch64
+
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+
+provisioner:
+  name: ansible
+  become: true

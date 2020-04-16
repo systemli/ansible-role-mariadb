@@ -4,3 +4,8 @@
   service:
     name: mysql
     state: restarted
+
+- name: remove MariaDB test database
+  mysql_db:
+    name: test
+    state: absent

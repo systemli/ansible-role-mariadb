@@ -10,9 +10,9 @@ galaxy_info:
     - mariadb
     - mysql
   platforms:
-  - name: Debian
-    versions:
-      - stretch
-      - buster
+    - name: Debian
+      versions:
+        - stretch
+        - buster
   notifications:
     webhooks: https://galaxy.ansible.com/api/v1/notifications/

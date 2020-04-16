@@ -1,3 +1,4 @@
+---
 - name: ensure munin-plugins-core is installed (on stretch from stretch-backports)
   apt:
     name: munin-plugins-core
@@ -18,7 +19,7 @@
     dest: "/etc/munin/plugins/mysql_{{ item }}"
     state: link
   loop:
-    - commands 
+    - commands
     - qcache
     - network_traffic
   notify: restart munin-node

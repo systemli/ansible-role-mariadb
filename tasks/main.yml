@@ -4,7 +4,7 @@
   apt:
     pkg: "{{ mariadb_packages }}"
     state: present
-  register: __mariadb_install_status
+  notify: remove MariaDB test database
 
 - name: optionally install automysqlbackup
   apt:
@@ -35,12 +35,6 @@
     owner: root
     group: root
     mode: 0600
-
-- name: remove MariaDB test database on first install
-  mysql_db:
-    name: test
-    state: absent
-  when: __mariadb_install_status|d() and __mariadb_install_status.changed
 
 - name: configure MariaDB server
   template:
