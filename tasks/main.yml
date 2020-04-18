@@ -17,6 +17,12 @@
     state: present
   when: mariadb_automysqlbackup
 
+- name: optionally install automysqlbackup
+  apt:
+    pkg: "mariadb-backup"
+    state: present
+  when: mariadb_backup and ansible_distribution_major_version|int >= 10
+
 - name: start MariaDB
   service:
     name: mysql
@@ -32,6 +38,17 @@
   notify: restart mysql
   tags:
     - role:mariadb:config
+
+- name: configure MariaDB backup
+  template:
+    src: etc/mysql/mariadb.conf.d/70-backup.cnf.j2
+    dest: /etc/mysql/conf.d/70-backup.cnf
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+    - role:mariadb:config
+  when: mariadb_backup and ansible_distribution_major_version|int >= 10
 
 - name: ensure databases are present
   mysql_db:
