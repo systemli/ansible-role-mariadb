@@ -31,7 +31,7 @@
 - name: configure MariaDB server
   template:
     src: etc/mysql/mariadb.conf.d/60-server.cnf.j2
-    dest: /etc/mysql/conf.d/60-server.cnf
+    dest: /etc/mysql/mariadb.conf.d/60-server.cnf
     owner: root
     group: root
     mode: 0644
@@ -42,7 +42,7 @@
 - name: configure MariaDB backup
   template:
     src: etc/mysql/mariadb.conf.d/70-backup.cnf.j2
-    dest: /etc/mysql/conf.d/70-backup.cnf
+    dest: /etc/mysql/mariadb.conf.d/70-backup.cnf
     owner: root
     group: root
     mode: 0644
