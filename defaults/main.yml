@@ -84,6 +84,9 @@ mariadb_mysqld_bin_log_options:
 mariadb_mysqld_repl_options:
   server_id: '{{ mariadb_server_id }}'
 
+mariadb_mysqld_backup_options:
+  open_files_limit: '65535'
+
 mariadb_mysqld_options_combined:
   - section: "mysqld"
     options:
@@ -94,11 +97,15 @@ mariadb_mysqld_options_combined:
       - '{{ mariadb_mysqld_bin_log_options if mariadb_replication_master else [] }}'
       - '{{ mariadb_mysqld_repl_options if (mariadb_replication_master or mariadb_replication_slave) else [] }}'
       - '{{ mariadb_mysqld_options }}'
+  - section: "mariabackup"
+    options:
+      - '{{ mariadb_mysqld_backup_options }}'
 
 mariadb_packages:
   - mariadb-client
   - mariadb-server
   - python3-pymysql
+  - mariadb-backup
 
 # Munin monitoring
 mariadb_munin: False
