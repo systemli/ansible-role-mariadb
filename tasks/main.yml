@@ -1,5 +1,10 @@
 ---
 
+- name: Set Ansible Python interpreter on Debian Buster
+  set_fact:
+    ansible_python_interpreter: /usr/bin/python3
+  when: ansible_distribution_release == 'buster'
+
 - name: install MariaDB client + server
   apt:
     pkg: "{{ mariadb_packages }}"
