@@ -6,7 +6,7 @@
 - name: create replication user
   mysql_user:
     name: "{{ mariadb_replication_user_local.user }}"
-    host: "{{ mariadb_replication_user_local.host|d('%') }}"
+    host: "{{ mariadb_replication_user_local.host|default('%') }}"
     password: "{{ mariadb_replication_user_local.pass }}"
     priv: "*.*:REPLICATION SLAVE"
     state: present

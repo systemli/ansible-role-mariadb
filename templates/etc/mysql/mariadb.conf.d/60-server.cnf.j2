@@ -3,7 +3,7 @@
 {%     if 'section' in config.keys() %}
 [{{ config.section }}]
 
-{%         if config.options|d() %}
+{%         if config.options|default() %}
 {%           if config.options is mapping %}
 {%             for element in config.options %}
 {{ print_config(config.options) -}}
@@ -15,8 +15,8 @@
 {%           endif %}
 {%         endif %}
 {%     elif 'name' in config.keys() %}
-{%       if config.state|d('present') == 'present' %}
-{%         if config.options|d() %}
+{%       if config.state|default('present') == 'present' %}
+{%         if config.options|default() %}
 {%           if config.options is mapping %}
 {{ print_config(config.options) -}}
 {%           else %}
@@ -24,7 +24,7 @@
 {{ print_config(element) -}}
 {%             endfor %}
 {%           endif %}
-{%         elif config.value|d() %}
+{%         elif config.value|default() %}
 {{ '%-30s = "%s"' | format(config.name, config.value) }}
 {%         else %}
 {{ config.name }}

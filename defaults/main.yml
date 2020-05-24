@@ -1,4 +1,5 @@
 ---
+
 # MariaDB databases
 mariadb_databases: []
 
@@ -53,7 +54,7 @@ mariadb_mysqld_options: {}
 
 # MySQLd performance options
 mariadb_mysqld_performance_options:
-  innodb_buffer_pool_instances: '{{ ansible_processor_vcpus | d(1) }}'
+  innodb_buffer_pool_instances: '{{ ansible_processor_vcpus|default(1) }}'
   innodb_buffer_pool_size: '{{ (ansible_memtotal_mb / 2) | int }}M'
   query_cache_type: '0'
 # Prevent double buffering for RAID setups
@@ -75,10 +76,10 @@ mariadb_mysqld_network_options:
 # MySQLd PKI/SSL options (disabled per default)
 mariadb_mysqld_pki_options: {}
 #  'ssl':
-#  'ssl_ca':     '{{ mariadb_ssl_ca if mariadb_ssl_ca|d() else "/etc/letsencrypt/..." }}'
-#  'ssl_cert':   '{{ mariadb_ssl_cert if mariadb_ssl_cert|d() else "/etc/letsencrypt/..." }}'
-#  'ssl_key':    '{{ mariadb_ssl_key if mariadb_ssl_key|d() else "/etc/letsencrypt/..." }}'
-#  'ssl_cipher': '{{ mariadb_ssl_cipher if mariadb_ssl_cihper|d() else "/etc/letsencrypt/..." }}'
+#  'ssl_ca':     '{{ mariadb_ssl_ca if mariadb_ssl_ca|default() else "/etc/letsencrypt/..." }}'
+#  'ssl_cert':   '{{ mariadb_ssl_cert if mariadb_ssl_cert|default() else "/etc/letsencrypt/..." }}'
+#  'ssl_key':    '{{ mariadb_ssl_key if mariadb_ssl_key|default() else "/etc/letsencrypt/..." }}'
+#  'ssl_cipher': '{{ mariadb_ssl_cipher if mariadb_ssl_cihper|default() else "/etc/letsencrypt/..." }}'
 
 mariadb_mysqld_bin_log_options:
   log_bin: '/var/log/mysql/mysql-bin.log'

@@ -67,7 +67,7 @@
 - name: create additional MariaDB users
   mysql_user:
     name: "{{ item.name }}"
-    host: "{{ item.host|d('localhost') }}"
+    host: "{{ item.host|default('localhost') }}"
     password: "{{ item.password }}"
     priv: "{{ item.priv }}"
     login_unix_socket: /run/mysqld/mysqld.sock
