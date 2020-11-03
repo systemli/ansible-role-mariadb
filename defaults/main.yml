@@ -17,14 +17,6 @@ mariadb_automysqlbackup: yes
 # Install mariadb_backup
 mariadb_backup: no
 
-# IP address and port to listen on
-# bind_address: "127.0.0.1" for local only, "::" for local and remote
-mariadb_bind_address: "127.0.0.1"
-mariadb_port: 3306
-
-# Maximum connections
-mariadb_max_connections: 150
-
 # Replication settings:
 # * Enable mariadb_replication_master on master server
 # * Enable mariadb_replication_slave on slave server
@@ -63,15 +55,15 @@ mariadb_mysqld_performance_options:
 # 'innodb_flush_log_at_trx_commit': '0'
 
 # MySQLd character set options
-mariadb_mysqld_charset_options:
-  character_set_server: 'utf8'
-  collation_server: 'utf8_general_ci'
-  init_connect: 'SET NAMES utf8'
+mariadb_mysqld_charset_options: {}
+#  character_set_server: 'utf8'
+#  collation_server: 'utf8_general_ci'
+#  init_connect: 'SET NAMES utf8'
 
-mariadb_mysqld_network_options:
-  bind_address: '{{ mariadb_bind_address }}'
-  port: '{{ mariadb_port }}'
-  max_connections: '{{ mariadb_max_connections }}'
+mariadb_mysqld_network_options: {}
+  # bind-address: "127.0.0.1" for local only, "::" for local and remote
+  # port: 3306
+  # max_connections: 150
 
 # MySQLd PKI/SSL options (disabled per default)
 mariadb_mysqld_pki_options: {}
