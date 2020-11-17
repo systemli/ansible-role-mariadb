@@ -61,9 +61,9 @@ mariadb_mysqld_charset_options: {}
 #  init_connect: 'SET NAMES utf8'
 
 mariadb_mysqld_network_options: {}
-#   bind-address: "127.0.0.1" for local only, "::" for local and remote
-#   port: 3306
-#   max_connections: 150
+#  bind-address: "127.0.0.1" for local only, "::" for local and remote
+#  port: 3306
+#  max_connections: 150
 
 # MySQLd PKI/SSL options (disabled per default)
 mariadb_mysqld_pki_options: {}

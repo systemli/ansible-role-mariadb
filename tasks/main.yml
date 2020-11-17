@@ -9,6 +9,7 @@
   apt:
     pkg: "{{ mariadb_packages }}"
     state: present
+    update_cache: true
   notify: remove MariaDB test database
 
 - name: install python-pymysql
