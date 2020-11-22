@@ -1,6 +1,7 @@
 # Ansible role to install and configure MariaDB on Debian systems
 
-[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-mariadb-blue.svg)](https://galaxy.ansible.com/systemli/mariadb/) [![Build Status](https://travis-ci.org/systemli/ansible-role-mariadb.svg?branch=master)](https://travis-ci.org/systemli/ansible-role-mariadb)
+[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-mariadb-blue.svg)](https://galaxy.ansible.com/systemli/mariadb/)
+[![Build Status](https://travis-ci.org/systemli/ansible-role-mariadb.svg?branch=master)](https://travis-ci.com/systemli/ansible-role-mariadb)
 
 The role installs and configures the MariaDB server on a Debian system.
 
