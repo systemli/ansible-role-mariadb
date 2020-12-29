@@ -1,7 +1,7 @@
 # Ansible role to install and configure MariaDB on Debian systems
 
+[![Build Status](https://github.com/systemli/ansible-role-mariadb/workflows/Integration/badge.svg?branch=master)](https://github.com/systemli/ansible-role-mariadb/actions?query=workflow%3AIntegration)
 [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-mariadb-blue.svg)](https://galaxy.ansible.com/systemli/mariadb/)
-[![Build Status](https://github.com/systemli/ansible-role-mariadb/workflows/Molecule/badge.svg?branch=master)](https://github.com/systemli/ansible-role-mariadb/actions?query=workflow%3AIntegration)
 
 The role installs and configures the MariaDB server on a Debian system.
 
