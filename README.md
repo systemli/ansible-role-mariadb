@@ -15,6 +15,20 @@ The role is tested on Debian 9-11.
 
 See `defaults/main.yml`.
 
+## Installation
+
+Using ansible galaxy cli:
+
+```bash
+ansible-galaxy install systemli.mariadb
+```
+
+Using ansible galaxy requirements file:
+
+```yaml
+- src: systemli.mariadb
+```
+
 ## Testing & Development
 
 For developing and testing the role we use Github Actions, Molecule, and Vagrant. On the local environment you can easily test the role with
