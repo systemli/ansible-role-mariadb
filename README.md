@@ -9,7 +9,7 @@ The role installs and configures the MariaDB server on a Debian system.
 * Sets `innodb_buffer_pool_instances` to number of vCPUs
 * Sets `innodb_buffer_pool_size` to (total memory / 2)
 
-The role is tested on Debian Stretch and Buster.
+The role is tested on Debian 9-11.
 
 ## Variables and their defaults
 
@@ -17,11 +17,7 @@ See `defaults/main.yml`.
 
 ## Testing & Development
 
-### Tests
-
 For developing and testing the role we use Github Actions, Molecule, and Vagrant. On the local environment you can easily test the role with
-
-Run local tests with:
 
 ```
 molecule test
