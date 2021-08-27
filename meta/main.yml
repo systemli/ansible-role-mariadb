@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   role_name: mariadb
-  author: systemli.org
+  author: systemli
   description: Role to setup MariaDB on Debian
   license: GPLv3
   min_ansible_version: 2.4
