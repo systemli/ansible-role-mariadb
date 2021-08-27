@@ -72,6 +72,7 @@
     password: "{{ item.password }}"
     priv: "{{ item.priv }}"
     login_unix_socket: /run/mysqld/mysqld.sock
+  no_log: true
   with_items:
     - "{{ mariadb_users }}"
 
