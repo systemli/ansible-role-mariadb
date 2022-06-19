@@ -4,7 +4,7 @@ galaxy_info:
   author: systemli
   description: Role to setup MariaDB on Debian
   license: GPLv3
-  min_ansible_version: 2.4
+  min_ansible_version: "2.4"
   galaxy_tags:
     - mariadb
     - mysql
@@ -14,5 +14,3 @@ galaxy_info:
         - stretch
         - buster
         - bullseye
-  notifications:
-    webhooks: https://galaxy.ansible.com/api/v1/notifications/
