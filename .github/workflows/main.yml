@@ -21,5 +21,3 @@ jobs:
     with:
       disable-apparmor-mysql: true
       distros: '[ "debian11", "debian10" ]'
-    secrets:
-      galaxy-token: ${{ secrets.galaxy_api_key }}
