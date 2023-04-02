@@ -76,12 +76,14 @@
   with_items:
     - "{{ mariadb_users }}"
 
-- include_tasks: replication.yml
+- name: Include replication tasks
+  include_tasks: replication.yml
   when: mariadb_replication_master or mariadb_replication_slave
   tags:
     - mariadb_replication
 
-- include_tasks: munin.yml
+- name: Include munin tasks
+  include_tasks: munin.yml
   when: mariadb_munin
   tags:
     - munin
