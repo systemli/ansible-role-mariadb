@@ -1,21 +1,23 @@
 ---
 - name: Run handlers if needed
-  meta: flush_handlers
+  ansible.legacy.meta: flush_handlers
 
 - name: Create replication
+  tags:
+    - mariadb_replication
   block:
-    - name: create replication user
-      mysql_user:
+    - name: Create replication user
+      community.mysql.mysql_user:
         name: "{{ mariadb_replication_user_local.user }}"
-        host: "{{ mariadb_replication_user_local.host|default('%') }}"
+        host: "{{ mariadb_replication_user_local.host | default('%') }}"
         password: "{{ mariadb_replication_user_local.pass }}"
         priv: "*.*:REPLICATION SLAVE"
         state: present
         login_unix_socket: /run/mysqld/mysqld.sock
       when: mariadb_replication_master and mariadb_replication_user_local is defined
 
-    - name: get replication slave status
-      mysql_replication:
+    - name: Get replication slave status
+      community.mysql.mysql_replication:
         mode: getslave
         login_unix_socket: /run/mysqld/mysqld.sock
       ignore_errors: True
@@ -23,16 +25,16 @@
       register: __mariadb_repl_slave_status
       when: mariadb_replication_slave
 
-    - name: get replication master status
-      mysql_replication:
+    - name: Get replication master status
+      community.mysql.mysql_replication:
         mode: getmaster
         login_unix_socket: /run/mysqld/mysqld.sock
       delegate_to: "{{ mariadb_replication_master_server }}"
       register: __mariadb_repl_master_status
       when: mariadb_replication_slave and not __mariadb_repl_slave_status.Is_Slave
 
-    - name: configure replication settings
-      mysql_replication:
+    - name: Configure replication settings
+      community.mysql.mysql_replication:
         mode: changemaster
         master_host: "{{ mariadb_replication_master_server }}"
         master_log_file: "{{ __mariadb_repl_master_status.File }}"
@@ -41,5 +43,3 @@
         master_password: "{{ mariadb_replication_user_remote.pass }}"
         login_unix_socket: /run/mysqld/mysqld.sock
       when: mariadb_replication_slave and not __mariadb_repl_slave_status.Is_Slave
-  tags:
-    - mariadb_replication

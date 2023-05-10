@@ -1,12 +1,11 @@
 ---
-
-- name: restart mysql
-  service:
+- name: Restart mysql
+  ansible.builtin.service:
     name: mysql
     state: restarted
 
-- name: remove MariaDB test database
-  mysql_db:
+- name: Remove MariaDB test database
+  community.mysql.mysql_db:
     name: test
     state: absent
     login_unix_socket: /run/mysqld/mysqld.sock
