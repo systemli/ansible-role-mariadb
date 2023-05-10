@@ -1,74 +1,73 @@
 ---
-
 - name: Set Ansible Python interpreter
-  set_fact:
+  ansible.builtin.set_fact:
     ansible_python_interpreter: /usr/bin/python3
-  when: ansible_distribution_major_version|int == 10
+  when: ansible_distribution_major_version | int == 10
 
-- name: install MariaDB client + server
-  apt:
+- name: Install MariaDB client + server
+  ansible.builtin.apt:
     pkg: "{{ mariadb_packages }}"
     state: present
     update_cache: true
-  notify: remove MariaDB test database
+  notify: Remove MariaDB test database
 
-- name: install python-pymysql
-  apt:
+- name: Install python-pymysql
+  ansible.builtin.apt:
     pkg: python-pymysql
-  when: ansible_distribution_major_version|int <= 9
+  when: ansible_distribution_major_version | int <= 9
 
-- name: optionally install automysqlbackup
-  apt:
+- name: Optionally install automysqlbackup
+  ansible.builtin.apt:
     pkg: "automysqlbackup"
     state: present
   when: mariadb_automysqlbackup
 
-- name: optionally install automysqlbackup
-  apt:
+- name: Optionally install automysqlbackup
+  ansible.builtin.apt:
     pkg: "mariadb-backup"
     state: present
-  when: mariadb_backup and ansible_distribution_major_version|int >= 10
+  when: mariadb_backup and ansible_distribution_major_version | int >= 10
 
-- name: start MariaDB
-  service:
+- name: Start MariaDB
+  ansible.builtin.service:
     name: mysql
     state: started
 
-- name: configure MariaDB server
-  template:
+- name: Configure MariaDB server
+  ansible.builtin.template:
     src: etc/mysql/mariadb.conf.d/60-server.cnf.j2
     dest: /etc/mysql/mariadb.conf.d/60-server.cnf
     owner: root
     group: root
-    mode: 0644
-  notify: restart mysql
+    mode: "0644"
+  notify: Restart mysql
   tags:
     - role:mariadb:config
 
-- name: configure MariaDB backup
-  template:
+- name: Configure MariaDB backup
+  ansible.builtin.template:
     src: etc/mysql/mariadb.conf.d/70-backup.cnf.j2
     dest: /etc/mysql/mariadb.conf.d/70-backup.cnf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   tags:
     - role:mariadb:config
-  when: mariadb_backup and ansible_distribution_major_version|int >= 10
+  when: mariadb_backup and ansible_distribution_major_version | int >= 10
 
-- name: ensure databases are present
-  mysql_db:
+- name: Ensure databases are present
+  community.mysql.mysql_db:
     name: "{{ item }}"
     login_unix_socket: /run/mysqld/mysqld.sock
   with_items: "{{ mariadb_databases }}"
 
 - name: Run handlers if needed
-  meta: flush_handlers
+  ansible.legacy.meta: flush_handlers
 
-- name: create additional MariaDB users
-  mysql_user:
+- name: Create additional MariaDB users
+  community.mysql.mysql_user:
     name: "{{ item.name }}"
-    host: "{{ item.host|default('localhost') }}"
+    host: "{{ item.host | default('localhost') }}"
     password: "{{ item.password }}"
     priv: "{{ item.priv }}"
     login_unix_socket: /run/mysqld/mysqld.sock
@@ -77,13 +76,13 @@
     - "{{ mariadb_users }}"
 
 - name: Include replication tasks
-  include_tasks: replication.yml
+  ansible.builtin.include_tasks: replication.yml
   when: mariadb_replication_master or mariadb_replication_slave
   tags:
     - mariadb_replication
 
 - name: Include munin tasks
-  include_tasks: munin.yml
+  ansible.builtin.include_tasks: munin.yml
   when: mariadb_munin
   tags:
     - munin

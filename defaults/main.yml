@@ -1,5 +1,4 @@
 ---
-
 # MariaDB databases
 mariadb_databases: []
 
@@ -46,9 +45,9 @@ mariadb_mysqld_options: {}
 
 # MySQLd performance options
 mariadb_mysqld_performance_options:
-  innodb_buffer_pool_instances: '{{ ansible_processor_vcpus|default(1) }}'
-  innodb_buffer_pool_size: '{{ (ansible_memtotal_mb / 2) | int }}M'
-  query_cache_type: '0'
+  innodb_buffer_pool_instances: "{{ ansible_processor_vcpus | default(1) }}"
+  innodb_buffer_pool_size: "{{ (ansible_memtotal_mb / 2) | int }}M"
+  query_cache_type: "0"
 # Prevent double buffering for RAID setups
 # 'innodb_flush_method':            'O_DIRECT'
 #  Use RAM buffer for InnoDB write operations
@@ -74,24 +73,24 @@ mariadb_mysqld_pki_options: {}
 #  'ssl_cipher': '{{ mariadb_ssl_cipher if mariadb_ssl_cihper|default() else "/etc/letsencrypt/..." }}'
 
 mariadb_mysqld_bin_log_options:
-  log_bin: '/var/log/mysql/mysql-bin.log'
-  log_basename: '{{ ansible_hostname }}'
+  log_bin: "/var/log/mysql/mysql-bin.log"
+  log_basename: "{{ ansible_hostname }}"
 
 mariadb_mysqld_repl_options:
-  server_id: '{{ mariadb_server_id }}'
+  server_id: "{{ mariadb_server_id }}"
 
 mariadb_mysqld_options_combined:
   - section: "mysqld"
     options:
-      - '{{ mariadb_mysqld_performance_options }}'
-      - '{{ mariadb_mysqld_charset_options }}'
-      - '{{ mariadb_mysqld_network_options }}'
-      - '{{ mariadb_mysqld_pki_options }}'
-      - '{{ mariadb_mysqld_bin_log_options if mariadb_replication_master else [] }}'
-      - '{{ mariadb_mysqld_repl_options if (mariadb_replication_master or mariadb_replication_slave) else [] }}'
-      - '{{ mariadb_mysqld_options }}'
+      - "{{ mariadb_mysqld_performance_options }}"
+      - "{{ mariadb_mysqld_charset_options }}"
+      - "{{ mariadb_mysqld_network_options }}"
+      - "{{ mariadb_mysqld_pki_options }}"
+      - "{{ mariadb_mysqld_bin_log_options if mariadb_replication_master else [] }}"
+      - "{{ mariadb_mysqld_repl_options if (mariadb_replication_master or mariadb_replication_slave) else [] }}"
+      - "{{ mariadb_mysqld_options }}"
 
-mariadb_backup_open_files_limit: '65535'
+mariadb_backup_open_files_limit: "65535"
 
 mariadb_packages:
   - mariadb-client
