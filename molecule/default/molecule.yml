@@ -5,8 +5,8 @@ driver:
     name: virtualbox
 
 platforms:
-  - name: bullseye64
-    box: debian/bullseye64
+  - name: bookworm64
+    box: debian/bookworm64
 
 lint: |
   set -e
@@ -15,4 +15,6 @@ lint: |
 
 provisioner:
   name: ansible
+  ansible_args:
+    - --diff
   become: true
