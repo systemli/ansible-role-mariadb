@@ -3,7 +3,6 @@
   ansible.builtin.apt:
     name: munin-plugins-core
     state: present
-    default_release: "{{ 'stretch-backports' if ansible_distribution_release == 'stretch' else omit }}"
 
 - name: Ensure munin perl packages are installed
   ansible.builtin.apt:

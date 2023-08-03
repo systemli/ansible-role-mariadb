@@ -1,20 +1,10 @@
 ---
-- name: Set Ansible Python interpreter
-  ansible.builtin.set_fact:
-    ansible_python_interpreter: /usr/bin/python3
-  when: ansible_distribution_major_version | int == 10
-
 - name: Install MariaDB client + server
   ansible.builtin.apt:
     pkg: "{{ mariadb_packages }}"
     state: present
     update_cache: true
   notify: Remove MariaDB test database
-
-- name: Install python-pymysql
-  ansible.builtin.apt:
-    pkg: python-pymysql
-  when: ansible_distribution_major_version | int <= 9
 
 - name: Optionally install automysqlbackup
   ansible.builtin.apt:
@@ -26,7 +16,7 @@
   ansible.builtin.apt:
     pkg: "mariadb-backup"
     state: present
-  when: mariadb_backup and ansible_distribution_major_version | int >= 10
+  when: mariadb_backup
 
 - name: Start MariaDB
   ansible.builtin.service:
@@ -53,7 +43,7 @@
     mode: "0644"
   tags:
     - role:mariadb:config
-  when: mariadb_backup and ansible_distribution_major_version | int >= 10
+  when: mariadb_backup
 
 - name: Ensure databases are present
   community.mysql.mysql_db:
