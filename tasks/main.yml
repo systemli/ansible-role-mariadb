@@ -18,6 +18,16 @@
     state: present
   when: mariadb_backup
 
+- name: Ensure the bin log dir exists
+  ansible.builtin.file:
+    owner: mysql
+    group: mysql
+    mode: '0750'
+    path: "{{ mariadb_mysqld_bin_log_options.log_bin | dirname }}"
+    state: directory
+  when:
+    - mariadb_mysqld_bin_log_options.log_bin | length > 0
+
 - name: Start MariaDB
   ansible.builtin.service:
     name: mysql
