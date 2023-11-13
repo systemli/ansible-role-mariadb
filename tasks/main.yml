@@ -77,7 +77,7 @@
 
 - name: Include replication tasks
   ansible.builtin.include_tasks: replication.yml
-  when: mariadb_replication_master or mariadb_replication_slave
+  when: mariadb_replication_primary or mariadb_replication_replica
   tags:
     - mariadb_replication
 
