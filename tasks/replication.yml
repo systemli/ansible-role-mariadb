@@ -11,35 +11,35 @@
         name: "{{ mariadb_replication_user_local.user }}"
         host: "{{ mariadb_replication_user_local.host | default('%') }}"
         password: "{{ mariadb_replication_user_local.pass }}"
-        priv: "*.*:REPLICATION SLAVE"
+        priv: "*.*:REPLICATION REPLICA"
         state: present
         login_unix_socket: /run/mysqld/mysqld.sock
-      when: mariadb_replication_master and mariadb_replication_user_local is defined
+      when: mariadb_replication_primary and mariadb_replication_user_local is defined
 
-    - name: Get replication slave status
+    - name: Get replication replica status
       community.mysql.mysql_replication:
-        mode: getslave
+        mode: getreplica
         login_unix_socket: /run/mysqld/mysqld.sock
       ignore_errors: True
       check_mode: no
-      register: __mariadb_repl_slave_status
-      when: mariadb_replication_slave
+      register: __mariadb_repl_replica_status
+      when: mariadb_replication_replica
 
-    - name: Get replication master status
+    - name: Get replication primary status
       community.mysql.mysql_replication:
-        mode: getmaster
+        mode: getprimary
         login_unix_socket: /run/mysqld/mysqld.sock
-      delegate_to: "{{ mariadb_replication_master_server }}"
-      register: __mariadb_repl_master_status
-      when: mariadb_replication_slave and not __mariadb_repl_slave_status.Is_Slave
+      delegate_to: "{{ mariadb_replication_primary_server }}"
+      register: __mariadb_repl_primary_status
+      when: mariadb_replication_replica and not __mariadb_repl_replica_status.Is_Replica
 
     - name: Configure replication settings
       community.mysql.mysql_replication:
-        mode: changemaster
-        master_host: "{{ mariadb_replication_master_server }}"
-        master_log_file: "{{ __mariadb_repl_master_status.File }}"
-        master_log_pos: "{{ __mariadb_repl_master_status.Position }}"
-        master_user: "{{ mariadb_replication_user_remote.user }}"
-        master_password: "{{ mariadb_replication_user_remote.pass }}"
+        mode: changeprimary
+        primary_host: "{{ mariadb_replication_primary_server }}"
+        primary_log_file: "{{ __mariadb_repl_primary_status.File }}"
+        primary_log_pos: "{{ __mariadb_repl_primary_status.Position }}"
+        primary_user: "{{ mariadb_replication_user_remote.user }}"
+        primary_password: "{{ mariadb_replication_user_remote.pass }}"
         login_unix_socket: /run/mysqld/mysqld.sock
-      when: mariadb_replication_slave and not __mariadb_repl_slave_status.Is_Slave
+      when: mariadb_replication_replica and not __mariadb_repl_replica_status.Is_Replica
