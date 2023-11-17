@@ -11,7 +11,7 @@
         name: "{{ mariadb_replication_user_local.user }}"
         host: "{{ mariadb_replication_user_local.host | default('%') }}"
         password: "{{ mariadb_replication_user_local.pass }}"
-        priv: "*.*:REPLICATION REPLICA"
+        priv: "*.*:REPLICATION SLAVE"
         state: present
         login_unix_socket: /run/mysqld/mysqld.sock
       when: mariadb_replication_primary and mariadb_replication_user_local is defined
