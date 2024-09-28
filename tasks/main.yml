@@ -22,7 +22,7 @@
   ansible.builtin.file:
     owner: mysql
     group: mysql
-    mode: '0750'
+    mode: "0750"
     path: "{{ mariadb_mysqld_bin_log_options.log_bin | dirname }}"
     state: directory
   when:
@@ -80,9 +80,3 @@
   when: mariadb_replication_primary or mariadb_replication_replica
   tags:
     - mariadb_replication
-
-- name: Include munin tasks
-  ansible.builtin.include_tasks: munin.yml
-  when: mariadb_munin
-  tags:
-    - munin
