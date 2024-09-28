@@ -97,10 +97,5 @@ mariadb_packages:
   - mariadb-server
   - python3-pymysql
 
-# Munin monitoring
-mariadb_munin: False
-# mariadb_munin_commands_select_warning: 300
-# mariadb_munin_commands_select_critical: 600
-
 # backward compatibility
 mariadb_users_extra: "{{ mariadb_users }}"
