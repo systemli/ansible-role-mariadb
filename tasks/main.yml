@@ -71,6 +71,7 @@
     password: "{{ item.password }}"
     priv: "{{ item.priv }}"
     login_unix_socket: /run/mysqld/mysqld.sock
+    column_case_sensitive: "{{ item.column_case_sensitive | default(false) }}"
   no_log: true
   with_items:
     - "{{ mariadb_users }}"
