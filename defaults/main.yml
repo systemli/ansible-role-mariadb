@@ -8,6 +8,7 @@ mariadb_databases: []
 #     host: localhost
 #     password: insecure
 #     priv: "project.*:All"
+#     column_case_sensitive: true
 mariadb_users: []
 
 # Install automysqlbackup
