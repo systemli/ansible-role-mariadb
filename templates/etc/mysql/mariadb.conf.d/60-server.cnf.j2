@@ -10,7 +10,9 @@
 {%             endfor %}
 {%           else %}
 {%             for element in config.options %}
+{%               if element | length > 0 %}
 {{ print_config(element) -}}
+{%               endif %}
 {%             endfor %}
 {%           endif %}
 {%         endif %}
