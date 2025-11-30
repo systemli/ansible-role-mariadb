@@ -11,6 +11,5 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
-        - stretch
-        - bullseye
+        - trixie
         - bookworm
