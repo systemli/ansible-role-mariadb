@@ -56,7 +56,7 @@
   when: mariadb_backup
 
 - name: Ensure databases are present
-  community.mysql.mysql_db:
+  ansible.mysql.mysql_db:
     name: "{{ item }}"
     login_unix_socket: /run/mysqld/mysqld.sock
   with_items: "{{ mariadb_databases }}"
@@ -65,7 +65,7 @@
   ansible.legacy.meta: flush_handlers
 
 - name: Create additional MariaDB users
-  community.mysql.mysql_user:
+  ansible.mysql.mysql_user:
     name: "{{ item.name }}"
     host: "{{ item.host | default('localhost') }}"
     password: "{{ item.password }}"
