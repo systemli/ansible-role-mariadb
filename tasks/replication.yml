@@ -7,7 +7,7 @@
     - mariadb_replication
   block:
     - name: Create replication user
-      community.mysql.mysql_user:
+      ansible.mysql.mysql_user:
         name: "{{ mariadb_replication_user_local.user }}"
         host: "{{ mariadb_replication_user_local.host | default('%') }}"
         password: "{{ mariadb_replication_user_local.pass }}"
@@ -17,7 +17,7 @@
       when: mariadb_replication_primary and mariadb_replication_user_local is defined
 
     - name: Get replication replica status
-      community.mysql.mysql_replication:
+      ansible.mysql.mysql_replication:
         mode: getreplica
         login_unix_socket: /run/mysqld/mysqld.sock
       ignore_errors: True
@@ -26,7 +26,7 @@
       when: mariadb_replication_replica
 
     - name: Get replication primary status
-      community.mysql.mysql_replication:
+      ansible.mysql.mysql_replication:
         mode: getprimary
         login_unix_socket: /run/mysqld/mysqld.sock
       delegate_to: "{{ mariadb_replication_primary_server }}"
@@ -34,7 +34,7 @@
       when: mariadb_replication_replica and not __mariadb_repl_replica_status.Is_Replica
 
     - name: Configure replication settings
-      community.mysql.mysql_replication:
+      ansible.mysql.mysql_replication:
         mode: changeprimary
         primary_host: "{{ mariadb_replication_primary_server }}"
         primary_log_file: "{{ __mariadb_repl_primary_status.File }}"
