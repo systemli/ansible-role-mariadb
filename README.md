@@ -9,7 +9,7 @@ The role installs and configures the MariaDB server on a Debian system.
 * Sets `innodb_buffer_pool_instances` to number of vCPUs
 * Sets `innodb_buffer_pool_size` to (total memory / 2)
 
-The role is tested on Debian 9-11.
+The role is tested on Debian 12 (bookworm) and Debian 13 (trixie).
 
 ## Variables and their defaults
 
@@ -31,13 +31,15 @@ Using ansible galaxy requirements file:
 
 ## Testing & Development
 
-For developing and testing the role we use Github Actions, Molecule, and Vagrant. On the local environment you can easily test the role with
+For developing and testing the role we use GitHub Actions and Molecule with the Docker driver. The same distributions are tested in CI (Debian 12 and 13). On the local environment you can test the role with
 
 ```
 molecule test
 ```
 
-Requires Molecule, Vagrant and `python-vagrant` to be installed. 
+Use `molecule converge` to apply the role and `molecule login` to inspect the container.
+
+Requires Docker (or a compatible container runtime), `molecule`, `molecule-plugins[docker]` and `ansible-lint` to be installed.
 
 # License
 
