@@ -20,8 +20,8 @@
       ansible.mysql.mysql_replication:
         mode: getreplica
         login_unix_socket: /run/mysqld/mysqld.sock
-      ignore_errors: True
-      check_mode: no
+      ignore_errors: true
+      check_mode: false
       register: __mariadb_repl_replica_status
       when: mariadb_replication_replica
 
