@@ -1,0 +1,140 @@
+---
+argument_specs:
+  main:
+    short_description: Install and configure MariaDB on Debian
+    description:
+      - Installs MariaDB server and client, creates databases and users and optionally sets up replication and backups.
+    options:
+      mariadb_databases:
+        type: list
+        elements: str
+        description:
+          - Names of databases to create.
+      mariadb_users:
+        type: list
+        elements: dict
+        description:
+          - Additional MariaDB users.
+        options:
+          name:
+            type: str
+            required: true
+          host:
+            type: str
+            description:
+              - Defaults to C(localhost).
+          password:
+            type: str
+            required: true
+          priv:
+            type: str
+            required: true
+            description:
+              - Privileges, for example C(project.*:ALL).
+          column_case_sensitive:
+            type: bool
+            description:
+              - Defaults to false.
+      mariadb_automysqlbackup:
+        type: bool
+        description:
+          - Install automysqlbackup.
+      mariadb_backup:
+        type: bool
+        description:
+          - Install mariadb-backup and configure its open files limit.
+      mariadb_replication_primary:
+        type: bool
+        description:
+          - Enable on primary server. Enable both for a primary-primary replication setup.
+      mariadb_replication_replica:
+        type: bool
+        description:
+          - Enable on replica server.
+      mariadb_server_id:
+        type: int
+        description:
+          - Server ID for replication (needs to be unique in replication setups).
+      mariadb_mysqld_options:
+        type: dict
+        description:
+          - Additional options of the C(mysqld) section as key/value pairs.
+      mariadb_mysqld_performance_options:
+        type: dict
+        description:
+          - Performance related C(mysqld) options as key/value pairs.
+      mariadb_mysqld_charset_options:
+        type: dict
+        description:
+          - Character set related C(mysqld) options as key/value pairs.
+      mariadb_mysqld_network_options:
+        type: dict
+        description:
+          - Network related C(mysqld) options as key/value pairs, for example C(bind-address), C(port) or C(max_connections).
+      mariadb_mysqld_pki_options:
+        type: dict
+        description:
+          - TLS related C(mysqld) options as key/value pairs (disabled by default).
+      mariadb_mysqld_bin_log_options:
+        type: dict
+        description:
+          - Binary log options, used if C(mariadb_replication_primary) is true. C(log_bin) is required and its directory is created.
+      mariadb_mysqld_repl_options:
+        type: dict
+        description:
+          - Replication options, used if replication is enabled.
+      mariadb_mysqld_options_combined:
+        type: list
+        elements: dict
+        description:
+          - All option sections written to the server config. Usually no need to override.
+        options:
+          section:
+            type: str
+            required: true
+          options:
+            type: list
+            elements: raw
+            required: true
+            description:
+              - List of dicts (or empty lists) of options.
+      mariadb_backup_open_files_limit:
+        type: str
+      mariadb_packages:
+        type: list
+        elements: str
+      mariadb_users_extra:
+        type: list
+        elements: dict
+        description:
+          - Backward compatibility alias of C(mariadb_users), not used by the role anymore.
+      mariadb_replication_user_local:
+        type: dict
+        description:
+          - Local replication user, required to be set on primaries.
+        options:
+          user:
+            type: str
+            required: true
+          host:
+            type: str
+            description:
+              - Defaults to C(%).
+          pass:
+            type: str
+            required: true
+      mariadb_replication_primary_server:
+        type: str
+        description:
+          - Replication primary server, required to be set on replicas.
+      mariadb_replication_user_remote:
+        type: dict
+        description:
+          - Remote replication user, required to be set on replicas.
+        options:
+          user:
+            type: str
+            required: true
+          pass:
+            type: str
+            required: true
