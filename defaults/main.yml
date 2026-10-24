@@ -12,17 +12,17 @@ mariadb_databases: []
 mariadb_users: []
 
 # Install automysqlbackup
-mariadb_automysqlbackup: yes
+mariadb_automysqlbackup: true
 
 # Install mariadb_backup
-mariadb_backup: no
+mariadb_backup: false
 
 # Replication settings:
 # * Enable mariadb_replication_primary on primary server
 # * Enable mariadb_replication_replica on replica server
 # * Enable both if for primary-primary replication setup
-mariadb_replication_primary: False
-mariadb_replication_replica: False
+mariadb_replication_primary: false
+mariadb_replication_replica: false
 
 # server ID for replication (needs to be unique in replication setups)
 mariadb_server_id: 1

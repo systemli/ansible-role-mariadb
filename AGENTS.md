@@ -12,7 +12,7 @@ Ansible role that installs and configures MariaDB on Debian (bookworm, trixie), 
 
 ## Checks
 
-- `yamllint .` must pass (config in `.yamllint`)
+- `ansible-lint` must pass with the default configuration (no config file)
 - `molecule test` runs the role in a container; CI runs it on Debian 12 and 13 via `systemli/github-ansible-workflow`
 - If you run `ansible-lint`, it creates `.ansible/`; it is git ignored, never commit it
 
